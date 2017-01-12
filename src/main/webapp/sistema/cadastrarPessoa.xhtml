@@ -73,11 +73,18 @@
 	            		
 	            		
 	            		<p:outputLabel value="Telefone" for="inputText-telefone"/>
-	            		<p:inputText id="inputText-telefone" 
+	            		<!-- <p:inputText id="inputText-telefone" 
 	            					 style="width:300px" 
 	            				     maxlength="15" 
 	            				     value="#{cadastrarPessoaController.pessoaModel.telefone}"
 	            				     required="true"
+	            				     requiredMessage="O telefone é de preenchimento obrigatório"/> -->
+	            				     
+        				<p:inputMask id="inputText-telefone" 
+        							 value="#{cadastrarPessoaController.pessoaModel.telefone}" 
+        							 mask="(99) 99999-9999"
+        							 style="width:300px"
+        							 required="true"
 	            				     requiredMessage="O telefone é de preenchimento obrigatório"/>
 	            		
 	            		<p:spacer/>
