@@ -10,8 +10,8 @@ public class PessoaModel {
 	private LocalDateTime	dataCadastro;
 	private String  		email;
 	private String  		endereco;
-	private String  		origemCadastro;
 	private UsuarioModel    usuarioModel;
+	private String    telefone;
 	
 	public Integer getCodigo() {
 		return codigo;
@@ -49,19 +49,18 @@ public class PessoaModel {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public String getOrigemCadastro() {
-		return origemCadastro;
-	}
-	public void setOrigemCadastro(String origemCadastro) {
-		this.origemCadastro = origemCadastro;
-	}
+
 	public UsuarioModel getUsuarioModel() {
 		return usuarioModel;
 	}
 	public void setUsuarioModel(UsuarioModel usuarioModel) {
 		this.usuarioModel = usuarioModel;
 	}
-	
-	
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 	
 }

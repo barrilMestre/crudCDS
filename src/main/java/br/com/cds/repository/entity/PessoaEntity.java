@@ -50,8 +50,8 @@ public class PessoaEntity {
 	@Column(name = "ds_endereco")
 	private String  		endereco;
 	
-	@Column(name = "fl_origemCadastro")
-	private String  		origemCadastro;
+	@Column(name = "ds_telefone")
+	private String telefone;
 	
 	@OneToOne
 	@JoinColumn(name="id_usuario_cadastro")
@@ -93,17 +93,17 @@ public class PessoaEntity {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public String getOrigemCadastro() {
-		return origemCadastro;
-	}
-	public void setOrigemCadastro(String origemCadastro) {
-		this.origemCadastro = origemCadastro;
-	}
 	public UsuarioEntity getUsuarioEntity() {
 		return usuarioEntity;
 	}
 	public void setUsuarioEntity(UsuarioEntity usuarioEntity) {
 		this.usuarioEntity = usuarioEntity;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 		
 }

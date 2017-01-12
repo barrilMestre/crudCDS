@@ -44,7 +44,7 @@ public class UsuarioController implements Serializable {
 		this.usuarioModel = usuarioModel;
 	}
 	
-	public UsuarioModel GetUsuarioSession(){
+	public UsuarioModel getUsuarioSession(){
 		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		

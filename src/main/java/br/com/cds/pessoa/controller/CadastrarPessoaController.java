@@ -48,13 +48,11 @@ public class CadastrarPessoaController {
 	}
 	
 	
-	public void SalvarNovaPessoa(){
+	public void salvarNovaPessoa(){
 		
-		pessoaModel.setUsuarioModel(this.usuarioController.GetUsuarioSession());
+		pessoaModel.setUsuarioModel(this.usuarioController.getUsuarioSession());
 		
-		pessoaModel.setOrigemCadastro("I");
-		
-		pessoaRepository.SalvarNovoRegistro(this.pessoaModel);
+		pessoaRepository.salvarNovoRegistro(this.pessoaModel);
 		
 		this.pessoaModel = null;
 		

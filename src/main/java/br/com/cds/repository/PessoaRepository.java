@@ -3,9 +3,7 @@ package br.com.cds.repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -26,17 +24,17 @@ public class PessoaRepository {
 	EntityManager entityManager;
 	
 	@Transactional
-	public void SalvarNovoRegistro(PessoaModel pessoaModel){
+	public void salvarNovoRegistro(PessoaModel pessoaModel){
 		
 		entityManager =  Uteis.JpaEntityManager();
-		
 		pessoaEntity = new PessoaEntity();
 		pessoaEntity.setDataCadastro(LocalDateTime.now());
 		pessoaEntity.setEmail(pessoaModel.getEmail());
 		pessoaEntity.setEndereco(pessoaModel.getEndereco());
 		pessoaEntity.setNome(pessoaModel.getNome());
-		pessoaEntity.setOrigemCadastro(pessoaModel.getOrigemCadastro());
 		pessoaEntity.setSexo(pessoaModel.getSexo());
+		pessoaEntity.setTelefone(pessoaModel.getTelefone());
+		
 		
 		UsuarioEntity usuarioEntity = entityManager.find(UsuarioEntity.class, pessoaModel.getUsuarioModel().getCodigo()); 
 		
@@ -106,6 +104,7 @@ public class PessoaRepository {
 			pessoaModel.setEmail(pessoaEntity.getEmail());
 			pessoaModel.setEndereco(pessoaEntity.getEndereco());
 			pessoaModel.setNome(pessoaEntity.getNome());
+			pessoaModel.setTelefone(pessoaEntity.getTelefone());
 			
 			if(pessoaEntity.getSexo().equals("M"))
 				pessoaModel.setSexo("Masculino");
