@@ -2,8 +2,12 @@ package br.com.cds.repository;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
+import br.com.cds.model.UsuarioFacebook;
 import br.com.cds.model.UsuarioModel;
 import br.com.cds.repository.entity.UsuarioEntity;
 import br.com.cds.uteis.Uteis;
@@ -11,7 +15,10 @@ import br.com.cds.uteis.Uteis;
 
 public class UsuarioRepository implements Serializable {
 	
+	@Inject
+	UsuarioEntity usuarioEntity;
 	
+	EntityManager entityManager;
 	private static final long serialVersionUID = 1L;
 
 	public UsuarioEntity ValidaUsuario(UsuarioModel usuarioModel){
@@ -33,7 +40,22 @@ public class UsuarioRepository implements Serializable {
 			return null;
 		}
 
+	}
+
+	@Transactional
+	public UsuarioEntity salvarUsuario(UsuarioModel um){
 		
+		entityManager =  Uteis.JpaEntityManager();
+		usuarioEntity = new UsuarioEntity();
+		usuarioEntity.setSenha(um.getSenha());
+		usuarioEntity.setUsuario(um.getUsuario());
+		
+				
+		entityManager.persist(usuarioEntity);
+		
+		return usuarioEntity;
 		
 	}
+
+	
 }

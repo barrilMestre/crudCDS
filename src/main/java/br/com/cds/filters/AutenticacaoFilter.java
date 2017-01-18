@@ -3,6 +3,7 @@ package br.com.cds.filters;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -16,11 +17,15 @@ import javax.servlet.http.HttpSession;
 
 import br.com.cds.model.UsuarioFacebook;
 import br.com.cds.model.UsuarioModel;
+import br.com.cds.repository.UsuarioRepository;
 import br.com.cds.usuario.autenticacao.LoginFacebook;
 
 @WebFilter("/sistema/*")
 public class AutenticacaoFilter implements Filter {
-
+	
+	@Inject
+	UsuarioRepository usuarioRepository;
+	
 	public AutenticacaoFilter() {
 
 	}
@@ -40,8 +45,10 @@ public class AutenticacaoFilter implements Filter {
 		UsuarioModel usuarioModel =(UsuarioModel) httpSession.getAttribute("usuarioAutenticado");
 
 		if(httpServletRequest.getRequestURI().equals("/crudCDS/sistema/redirectFace") ){
-			logarComFacebook(request.getParameter("code").toString(),httpSession);
+			
+			UsuarioFacebook uf = logarComFacebook(request.getParameter("code").toString(),httpSession);
 			httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+ "/sistema/home.xhtml");
+			//usuarioRepository.salvarUsuario(uf);
 		}else{
 		
 			if(httpServletRequest.getRequestURI().indexOf("index.xhtml") <= -1){
@@ -60,15 +67,15 @@ public class AutenticacaoFilter implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 
 	}
-	public void logarComFacebook(String code,HttpSession httpSession ) throws MalformedURLException, IOException{
+	public UsuarioFacebook logarComFacebook(String code,HttpSession httpSession ) throws MalformedURLException, IOException{
 		LoginFacebook loginFacebook =new LoginFacebook();
 		UsuarioFacebook uf = loginFacebook.obterUsuarioFacebook(code);
 		UsuarioModel usuarioModel = new UsuarioModel();
-		usuarioModel.setCodigo(uf.getId().toString());
 		usuarioModel.setUsuario(uf.getName());
-		usuarioModel.setSenha(null);
+		usuarioModel.setSenha(uf.getId().toString());
 
 		httpSession.setAttribute("usuarioAutenticado", usuarioModel);
-
+		
+		return uf;
 	}
 }

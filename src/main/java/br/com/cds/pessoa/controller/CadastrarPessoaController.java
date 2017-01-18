@@ -11,7 +11,10 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.cds.model.PessoaModel;
+import br.com.cds.model.UsuarioModel;
 import br.com.cds.repository.PessoaRepository;
+import br.com.cds.repository.UsuarioRepository;
+import br.com.cds.repository.entity.UsuarioEntity;
 import br.com.cds.usuario.controller.UsuarioController;
 import br.com.cds.uteis.Uteis;
 
@@ -28,6 +31,8 @@ public class CadastrarPessoaController {
 	@Inject
 	PessoaRepository pessoaRepository;
 
+	@Inject
+	UsuarioRepository usuarioRepository;
 	
 	private UploadedFile file;
 	
@@ -50,17 +55,30 @@ public class CadastrarPessoaController {
 	
 	public void salvarNovaPessoa(){
 		
-		pessoaModel.setUsuarioModel(this.usuarioController.getUsuarioSession());
-		
+		pessoaModel.setUsuarioModel(verificaUsuarioFace());
 		pessoaRepository.salvarNovoRegistro(this.pessoaModel);
-		
 		this.pessoaModel = null;
-		
 		Uteis.MensagemInfo("Registro cadastrado com sucesso");
 		
 	}
 	
-    public void handleFileUpload(FileUploadEvent event) {
+    private UsuarioModel verificaUsuarioFace() {
+		UsuarioModel um = this.usuarioController.getUsuarioSession();
+		
+		if(um.getCodigo()==null){
+		
+			UsuarioEntity ue= usuarioRepository.ValidaUsuario(um);
+			
+			if(ue==null){
+				ue= usuarioRepository.salvarUsuario(um);
+			}
+			um.setCodigo(ue.getCodigo());
+			
+		}
+		return um;
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
     	
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);

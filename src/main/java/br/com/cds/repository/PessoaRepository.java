@@ -1,5 +1,6 @@
 package br.com.cds.repository;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,8 +17,10 @@ import br.com.cds.repository.entity.PessoaEntity;
 import br.com.cds.repository.entity.UsuarioEntity;
 import br.com.cds.uteis.Uteis;
 
-public class PessoaRepository {
-
+public class PessoaRepository implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+		
 	@Inject
 	PessoaEntity pessoaEntity;
 	
